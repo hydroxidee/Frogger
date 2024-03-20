@@ -7,6 +7,7 @@
 Log::Log(Game* game, char texture)
 : Actor(game)
 {
+	// creates a log of varying width depending on the texture index
 	mSpriteC = new SpriteComponent(this);
 
 	mWrapM = new WrappingMove(this);
@@ -41,6 +42,7 @@ Log::~Log()
 
 void Log::SetDirection(int row)
 {
+	// sets direction in which log is moving (left or right)
 	if (row % 2 == 0)
 	{
 		mWrapM->SetDirection(Vector2(1, 0));

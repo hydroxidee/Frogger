@@ -17,6 +17,7 @@ CollisionComponent::~CollisionComponent()
 
 bool CollisionComponent::Intersect(const CollisionComponent* other) const
 {
+	// checks for left, right, top, and bottom intersection  
 	bool noIntersection = this->GetMax().x < other->GetMin().x ||
 						  other->GetMax().x < this->GetMin().x ||
 						  this->GetMax().y < other->GetMin().y ||
@@ -27,6 +28,7 @@ bool CollisionComponent::Intersect(const CollisionComponent* other) const
 
 Vector2 CollisionComponent::GetMin() const
 {
+	//returns minimum point for hit box
 	float x = GetCenter().x - (mWidth * mOwner->GetScale()) / 2.0f;
 	float y = GetCenter().y - (mHeight * mOwner->GetScale()) / 2.0f;
 	return Vector2(x, y);
@@ -34,6 +36,7 @@ Vector2 CollisionComponent::GetMin() const
 
 Vector2 CollisionComponent::GetMax() const
 {
+	//returns maximum point for hit box
 	float x = GetCenter().x + (mWidth * mOwner->GetScale()) / 2.0f;
 	float y = GetCenter().y + (mHeight * mOwner->GetScale()) / 2.0f;
 	return Vector2(x, y);
@@ -41,6 +44,7 @@ Vector2 CollisionComponent::GetMax() const
 
 const Vector2& CollisionComponent::GetCenter() const
 {
+	//returns center of hitbox
 	return mOwner->GetPosition();
 }
 

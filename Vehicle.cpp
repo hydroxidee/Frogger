@@ -9,6 +9,7 @@
 Vehicle::Vehicle(Game* game, char texture)
 : Actor(game)
 {
+	//creates a vehicle of varying size based on the texture index
 	mSpriteC = new SpriteComponent(this);
 
 	mWrapM = new WrappingMove(this);
@@ -52,6 +53,7 @@ Vehicle::~Vehicle()
 
 void Vehicle::OnUpdate(float deltaTime)
 {
+	// checks if frog is in front of the vehicle
 	Vector2 toFrog = mGame->GetFrog()->GetPosition() - GetPosition();
 
 	toFrog.Normalize();
@@ -59,6 +61,7 @@ void Vehicle::OnUpdate(float deltaTime)
 	float dot = Vector2::Dot(mWrapM->GetDirection(), toFrog);
 	float angle = Math::Acos(dot);
 
+	// reduces the speed if the frog is in front
 	if (angle < (Math::Pi / 6.0f))
 	{
 		mWrapM->SetForwardSpeed(FORWARD_SPEED / 2);
@@ -71,6 +74,7 @@ void Vehicle::OnUpdate(float deltaTime)
 
 void Vehicle::SetDirection(int row)
 {
+	// sets whether the car is moving left or right
 	if (row % 2 == 0)
 	{
 		mWrapM->SetDirection(Vector2(1, 0));

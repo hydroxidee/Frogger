@@ -11,15 +11,19 @@ Actor::Actor(Game* game)
 , mScale(1.0f)
 , mRotation(0.0f)
 {
+	//adds actor to game's vector of actors
 	mGame->AddActor(this);
 
+	//creates a collision component to help detect whether the actor collides with another actor
 	mCollisionComp = new CollisionComponent(this);
 }
 
 Actor::~Actor()
 {
+	//removes actor from game's vector of actors
 	mGame->RemoveActor(this);
 
+	//deallocates actor components
 	for (auto c : mComponents)
 	{
 		delete c;
@@ -29,6 +33,7 @@ Actor::~Actor()
 
 void Actor::Update(float deltaTime)
 {
+	// goes through and updates all the actor's various components
 	if (mState == ActorState::Active)
 	{
 		for (auto c : mComponents)
@@ -39,12 +44,14 @@ void Actor::Update(float deltaTime)
 	}
 }
 
+//updates the actor, overriden by child classes
 void Actor::OnUpdate(float deltaTime)
 {
 }
 
 void Actor::ProcessInput(const Uint8* keyState)
 {
+	// reads in keys from player
 	if (mState == ActorState::Active)
 	{
 		for (auto c : mComponents)
@@ -55,12 +62,15 @@ void Actor::ProcessInput(const Uint8* keyState)
 	}
 }
 
+// updates actor based on keys pressed, overriden by child classes
 void Actor::OnProcessInput(const Uint8* keyState)
 {
 }
 
+
 void Actor::AddComponent(Component* c)
 {
+	//adds and sorts actor components
 	mComponents.emplace_back(c);
 	std::sort(mComponents.begin(), mComponents.end(), [](Component* a, Component* b) {
 		return a->GetUpdateOrder() < b->GetUpdateOrder();
@@ -69,5 +79,6 @@ void Actor::AddComponent(Component* c)
 
 Vector2 Actor::GetForward() const
 {
+	//returns a forward vector
 	return Vector2(cos(mRotation), sin(mRotation) * -1);
 }

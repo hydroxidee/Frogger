@@ -12,7 +12,6 @@
 
 int main(int argc, char** argv)
 {
-	// TODO
 	Game game;
 	bool initialized = game.Initialize();
 
